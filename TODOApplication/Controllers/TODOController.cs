@@ -20,18 +20,6 @@ namespace TODOApplication.Controllers
             dbContext = _dbContext;
         }
 
-        //search for multiple categories
-        [HttpGet("{tittel}")]
-        public async Task<IActionResult> GetTODOByTittel(string tittel)
-        {
-
-            var TODO = dbContext.TODO
-                .Select(t => t.Tittel == tittel)
-                .FirstOrDefaultAsync();
-
-            return Ok(await TODO);
-        }
-
         [HttpGet("")]
         public async Task<IActionResult> GetAllTODO()
         {
@@ -65,17 +53,6 @@ namespace TODOApplication.Controllers
             }
 
         }
-        /*
-        [HttpGet]
-        public async Task<IActionResult> GetAllTODO()
-        {
-
-            var TODO = dbContext.TODO
-                .Select(t => t)
-                .ToListAsync();
-
-            return Ok(await TODO);
-        }*/
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateTODO(TODOCreateDTO dto)
@@ -122,17 +99,9 @@ namespace TODOApplication.Controllers
             else
             {
 
-                //todo.Tittel = dto.Tittel;
-                //todo.Frist = dto.Frist;
-                //todo.Utfort = dto.Utfort;
-                //dbContext.Entry(dbContext.TODO.FirstOrDefaultAsync(t => t.Id == dto.Id)).CurrentValues.SetValues(new TODO(dto));
-                //var todoEntity = ;
                 DateTime opprettet = todo.Opprettelse;
                 dbContext.Entry(todo).CurrentValues.SetValues(new TODO(dto));
                 todo.Opprettelse = opprettet;
-                //todoEntity.State = EntityState.Modified;
-
-                int h = 0;
 
                 var kategori = await dbContext.Kategori
                     .Select(k => k)

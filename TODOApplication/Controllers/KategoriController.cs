@@ -47,24 +47,5 @@ namespace TODOApplication.Controllers
 
         }
 
-        [HttpGet("view")]
-        public async Task<IActionResult> GetKategoriById()
-        {
-
-            if (queryId == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                var TODO = dbContext.TODO
-                    .Where(t => t.Id == queryId)
-                    .Select(t => t)
-                    .FirstOrDefaultAsync();
-
-                return Ok(await TODO);
-            }
-
-        }
     }
 }
